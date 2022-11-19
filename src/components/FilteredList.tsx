@@ -80,7 +80,7 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
   const shuffled = wordsList.sort(() => 0.5 - Math.random())
 
   // Get sub-array of first n elements after shuffled
-  content = alphabeticalOrder(shuffled.slice(0, 200)) 
+  content = alphabeticalOrder(shuffled.slice(0, 300)) 
 
   return (
     <div className='filteredList'>

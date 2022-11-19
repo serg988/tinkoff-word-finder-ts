@@ -1,19 +1,13 @@
 import React, { useState } from 'react'
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Typography,
+ 
 } from '@mui/material'
 
 import './WordLine.css'
 interface IWordLine {
-  // tryWord: { value: string; status: number }[]
   tryWord: string[]
-  submitHandler: any
+  submitHandler: (colors: number[])=>void
 }
 
 enum Status {
@@ -78,9 +72,7 @@ const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
         >
           {tryWord[4]}
         </div>
-        {/* <button className='submitButton' onClick={() => submitHandler(colors)}> */}
-        {/* Искать
-        </button> */}
+  
       </div>
       <Button
         variant='outlined'
