@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import words from '../utils/parser'
 
 interface IFilteredList {
-  // term: { lip: string[] ; npl: string[]; pl: string[] }
-  term: any
+  term: { lip: string[]; npl: string[]; pl: string[] } | undefined
+  // term: any
 }
 
 const FilteredList: React.FC<IFilteredList> = ({ term }) => {
@@ -13,38 +13,60 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
   }, [])
 
   useEffect(() => {
-    if (term?.npl && term?.npl.length > 0) {
-      term.npl.forEach((element: string) => {
-        setWordsList((prevState) =>
-          prevState.filter((word) => word.indexOf(element) === -1)
-        )
-      })
+    //----------------L I P------------------
+
+    let expression = '.....'
+
+    if (term?.lip) {
+      if (/[а-я]/.test(term?.lip.join(''))) {
+        expression = term?.lip.join('')
+      }
     }
 
-    if (term?.pl.length > 0) {
-      term.pl.forEach((element: string) => {
+    const regexObj = new RegExp(expression)
+
+    setWordsList((prevState) => prevState.filter((word) => regexObj.test(word)))
+
+    // -------------PRESENTED LETTERS-------------
+
+    if (term?.pl && term?.pl.length > 0) {
+      let exp = '......'
+
+      if (term?.pl) {
+        if (/[а-я]/.test(term?.pl.join(''))) {
+          exp = term?.pl.join('')
+        }
+      }
+
+      const regexObj = new RegExp(exp)
+      console.log(
+        '🚀 ~ file: FilteredList.tsx ~ line 47 ~ useEffect ~ regexObj',
+        regexObj
+      )
+
+      setWordsList((prevState) =>
+        prevState.filter((word) => !regexObj.test(word))
+      )
+      const plWithoutDots = term.pl.filter((l) => l !== '.')
+      plWithoutDots.forEach((element: string) => {
         setWordsList((prevState) =>
           prevState.filter((word) => word.includes(element))
         )
       })
     }
 
-    //----------------L I P------------------
+    // --------NOT PRESENTED LETTERS
+    if (term?.npl && term?.npl.length > 0) {
+      const nplWithoutDots = term.npl.filter((l) => l !== '.')
+      const differencePl = nplWithoutDots.filter((x) => !term.pl.includes(x))
+      const differenceLip = differencePl.filter((x) => !term.lip.includes(x))
 
-    let expression = '.....'
-
-      if (/[а-я]/.test(term?.lip)) {
-      console.log("🚀 ~ file: FilteredList.tsx ~ line 37 ~ useEffect ~ term?.lip", term?.lip)
-      expression = term?.lip.join('')
-      console.log("🚀 ~ file: FilteredList.tsx ~ line 39 ~ useEffect ~ expression", expression)
+      differenceLip.forEach((element: string) => {
+        setWordsList((prevState) =>
+          prevState.filter((word) => word.indexOf(element) === -1)
+        )
+      })
     }
-    
-    
-
-    const regexObj = new RegExp(expression)
-
-    setWordsList((prevState) => prevState.filter((word) => regexObj.test(word)))
-
     //--------------------------------------------
   }, [term])
 

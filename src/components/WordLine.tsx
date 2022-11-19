@@ -4,6 +4,7 @@ import './WordLine.css'
 interface IWordLine {
   // tryWord: { value: string; status: number }[]
   tryWord: string[]
+  submitHandler: any
 }
 
 enum Status {
@@ -11,19 +12,32 @@ enum Status {
   'white',
   'yellow',
 }
+let i = 0
 
-const WordLine: React.FC<IWordLine> = ({ tryWord }) => {
+const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
   const [color1, setColor1] = useState<number>(0)
   const [color2, setColor2] = useState<number>(0)
   const [color3, setColor3] = useState<number>(0)
   const [color4, setColor4] = useState<number>(0)
   const [color5, setColor5] = useState<number>(0)
-  
-  let i = 0
+
+  const colors: {
+    color1: number
+    color2: number
+    color3: number
+    color4: number
+    color5: number
+  } = {
+    color1,
+    color2,
+    color3,
+    color4,
+    color5,
+  }
+
   const changeColor = () => {
     i = i + 1
     if (i >= 3) i = 0
-    console.log('🚀 ~ file: WordLine.tsx ~ line 24 ~ changeColor ~ i', i)
     return i
   }
 
@@ -60,6 +74,12 @@ const WordLine: React.FC<IWordLine> = ({ tryWord }) => {
       >
         {tryWord[4]}
       </div>
+      <button
+        className='submitButton'
+        onClick={submitHandler.bind(null, colors)}
+      >
+        Искать
+      </button>
     </div>
   )
 }
