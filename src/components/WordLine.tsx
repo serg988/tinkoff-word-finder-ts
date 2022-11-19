@@ -30,13 +30,13 @@ const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
   const [color4, setColor4] = useState<number>(0)
   const [color5, setColor5] = useState<number>(0)
 
-  const colors = {
+  const colors = [
     color1,
     color2,
     color3,
     color4,
     color5,
-  }
+  ]
 
   const changeColor = () => {
     i = i + 1

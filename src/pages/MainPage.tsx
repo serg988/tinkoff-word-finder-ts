@@ -32,8 +32,7 @@ const MainPage: React.FC = () => {
     }
   }
 
-  const submitHandler = (colors: number) => {
-    const colorArr = Object.values(colors)
+  const submitHandler = (colors: number[]) => {
 
     let i = -1
     let j = -1
@@ -41,21 +40,21 @@ const MainPage: React.FC = () => {
     if (Array.isArray(tryWord)) {
       const lip = tryWord.map((l) => {
         i++
-        if (colorArr[i] === 2) {
+        if (colors[i] === 2) {
           return l
         }
         return '.'
       })
       const pl = tryWord.map((l) => {
         j++
-        if (colorArr[j] === 1) {
+        if (colors[j] === 1) {
           return l
         }
         return '.'
       })
       const npl = tryWord.map((l) => {
         k++
-        if (colorArr[k] === 0) {
+        if (colors[k] === 0) {
           return l
         }
         return '.'
@@ -77,7 +76,7 @@ const MainPage: React.FC = () => {
         >
           {buttonName}
         </Button>
-        <Dialog open={open} onClose={() => setOpen(false)} maxWidth='xl'>
+        <Dialog open={open} onClose={() => setOpen(false)} maxWidth='sm'>
           <DialogTitle>
             <Typography>Попробуйте общеупотребимое слово из списка</Typography>
           </DialogTitle>
@@ -92,6 +91,8 @@ const MainPage: React.FC = () => {
                   border: 'none',
                   borderRadius: 0,
                   borderBottom: '3px solid #3f50b5',
+                  width: '30px',
+                  height: '30px',
                 },
               }}
             />
@@ -101,7 +102,7 @@ const MainPage: React.FC = () => {
           </DialogActions>
         </Dialog>
       </div>
-     
+
       {Array.isArray(tryWord) && tryWord.length === 5 && (
         <WordLine tryWord={tryWord} submitHandler={submitHandler} />
       )}
