@@ -15,8 +15,9 @@ import {
 } from '@mui/material'
 
 const MainPage: React.FC = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<boolean>(false)
   const [tryWord, setTryWord] = useState<string[] | {}>([])
+  const [buttonName, setButtonName] = useState('Введите случайное слово')
 
   const [term, setTerm] = useState<{
     lip: string[]
@@ -27,12 +28,11 @@ const MainPage: React.FC = () => {
   const tryWordHandler = (string: string) => {
     if (/[а-я, А-Я]/.test(string)) {
       const res = string.toLowerCase().split('')
-
       setTryWord(res)
     }
   }
 
-  const submitHandler = (colors: any) => {
+  const submitHandler = (colors: number) => {
     const colorArr = Object.values(colors)
 
     let i = -1
@@ -61,19 +61,9 @@ const MainPage: React.FC = () => {
         return '.'
       })
       setTerm({ lip, npl, pl })
-      // resetHandler()
+      setButtonName('Введите следующее слово')
+      setOpen(true)
     }
-  }
-
-  const resetHandler = () => {
-    setTryWord([
-      {}
-    ])
-    setTerm({
-      lip: [],
-      npl: [],
-      pl: [],
-    })
   }
 
   return (
@@ -81,15 +71,15 @@ const MainPage: React.FC = () => {
       <h2>Выигрываем легко!</h2>
       <div>
         <Button
-          variant='contained'
+          variant='outlined'
           color='primary'
           onClick={() => setOpen(true)}
         >
-          Введите слово
+          {buttonName}
         </Button>
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth='xl'>
           <DialogTitle>
-            <Typography >Попробуйте слово</Typography>
+            <Typography>Попробуйте общеупотребимое слово из списка</Typography>
           </DialogTitle>
           <DialogContent dividers>
             <RICIBs
@@ -107,28 +97,15 @@ const MainPage: React.FC = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpen(false)}>Да</Button>
+            <Button onClick={() => setOpen(false)}>Скрыть</Button>
           </DialogActions>
         </Dialog>
       </div>
-      {/* <RICIBs
-        amount={5}
-        autoFocus
-        handleOutputString={tryWordHandler}
-        // inputProps={tryWord}
-        inputRegExp={/^[а-я А-Я]$/}
-      /> */}
+     
       {Array.isArray(tryWord) && tryWord.length === 5 && (
         <WordLine tryWord={tryWord} submitHandler={submitHandler} />
       )}
 
-      {/* <button className='resetButton' onClick={resetHandler}>
-        Сброс
-      </button> */}
-
-      {/* <button className='submitButton' onClick={submitHandler}>
-        Искать
-      </button> */}
       <FilteredList term={term} />
     </div>
   )

@@ -3,6 +3,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 .box {
   width: 49px;
@@ -15,17 +16,20 @@
   justify-content: center;
   font-size: 1.7rem;
 }
-.box.gray{
+.box.gray {
   background-color: gray;
   color: lightgray;
 }
-.box.white{
+.box.white {
   background-color: white;
 }
-.box.yellow{
+.box.yellow {
   background-color: yellow;
-  color: black
+  color: black;
 }
-.wordLineTitle{
+.wordLineTitle {
   margin-top: 50px;
+}
+.filteredList {
+  margin: 20px;
 }

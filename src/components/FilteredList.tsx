@@ -39,10 +39,6 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
       }
 
       const regexObj = new RegExp(exp)
-      console.log(
-        '🚀 ~ file: FilteredList.tsx ~ line 47 ~ useEffect ~ regexObj',
-        regexObj
-      )
 
       setWordsList((prevState) =>
         prevState.filter((word) => !regexObj.test(word))
@@ -70,10 +66,26 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
     //--------------------------------------------
   }, [term])
 
+  function alphabeticalOrder(arr: string[]) {
+    return arr.sort(function (a, b) {
+      return a === b ? 0 : a > b ? 1 : -1
+    })
+  }
+
+  let content: string[]
+  if (wordsList.length <= 300) {
+    content= wordsList
+  }
+  // Shuffle array
+  const shuffled = wordsList.sort(() => 0.5 - Math.random())
+
+  // Get sub-array of first n elements after shuffled
+  content = alphabeticalOrder(shuffled.slice(0, 200)) 
+
   return (
-    <div>
-      {wordsList.slice(0, 200).map((w) => {
-        return <span key={Math.random()}>{w}, </span>
+    <div className='filteredList'>
+      {content.slice(0, 300).map((w) => {
+        return <span key={w}>{w}, </span>
       })}
     </div>
   )
