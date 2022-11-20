@@ -16,18 +16,16 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
     // --------NOT PRESENTED LETTERS
     if (term?.npl && term?.npl.length > 0) {
       const nplWithoutDots = term.npl.filter((l) => l !== '.')
-     
+     const differencePl = nplWithoutDots.filter((x) => !term.pl.includes(x))
+     const differenceLip = differencePl.filter((x) => !term.lip.includes(x))
 
-      nplWithoutDots.forEach((element: string) => {
+      differenceLip.forEach((element: string) => {
         setWordsList((prevState) =>
           prevState.filter((word) => word.indexOf(element) === -1)
         )
       })
     }
     // -------------PRESENTED LETTERS-------------
-
-    //  const differencePl = nplWithoutDots.filter((x) => !term.pl.includes(x))
-    //  const differenceLip = differencePl.filter((x) => !term.lip.includes(x))
 
     if (term?.pl && term?.pl.length > 0) {
       let exp = '.....'
@@ -44,10 +42,9 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
         prevState.filter((word) => !regexObj.test(word))
       )
       const plWithoutDots = term.pl.filter((l) => l !== '.')
-       const differencePl = plWithoutDots.filter((x) => !term.pl.includes(x))
-       const differenceLip = differencePl.filter((x) => !term.lip.includes(x))
+       
 
-      differenceLip.forEach((element: string) => {
+      plWithoutDots.forEach((element: string) => {
         setWordsList((prevState) =>
           prevState.filter((word) => word.includes(element))
         )
