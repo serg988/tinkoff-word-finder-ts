@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import words from '../utils/parser'
 
 interface IFilteredList {
-  term: { lip: string[]; npl: string[]; pl: string[] } | undefined
+  term?: { lip: string[]; npl: string[]; pl: string[] }
+  tryWordHandler: (word: string) => void
   // term: any
 }
 
-const FilteredList: React.FC<IFilteredList> = ({ term }) => {
+const FilteredList: React.FC<IFilteredList> = ({ term, tryWordHandler }) => {
   const [wordsList, setWordsList] = useState<string[]>([])
+
   useEffect(() => {
     setWordsList(words)
   }, [])
@@ -16,8 +18,8 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
     // --------NOT PRESENTED LETTERS
     if (term?.npl && term?.npl.length > 0) {
       const nplWithoutDots = term.npl.filter((l) => l !== '.')
-     const differencePl = nplWithoutDots.filter((x) => !term.pl.includes(x))
-     const differenceLip = differencePl.filter((x) => !term.lip.includes(x))
+      const differencePl = nplWithoutDots.filter((x) => !term.pl.includes(x))
+      const differenceLip = differencePl.filter((x) => !term.lip.includes(x))
 
       differenceLip.forEach((element: string) => {
         setWordsList((prevState) =>
@@ -28,7 +30,7 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
     // -------------PRESENTED LETTERS-------------
 
     if (term?.pl && term?.pl.length > 0) {
-      let exp = '.....'
+      let exp = '......'
 
       if (term?.pl) {
         if (/[а-я]/.test(term?.pl.join(''))) {
@@ -42,7 +44,6 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
         prevState.filter((word) => !regexObj.test(word))
       )
       const plWithoutDots = term.pl.filter((l) => l !== '.')
-       
 
       plWithoutDots.forEach((element: string) => {
         setWordsList((prevState) =>
@@ -73,6 +74,10 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
     })
   }
 
+  const selectWordHandler = (word: string) => {
+    tryWordHandler(word)
+  }
+
   let content: string[]
   if (wordsList.length <= 300) {
     content = wordsList
@@ -86,7 +91,11 @@ const FilteredList: React.FC<IFilteredList> = ({ term }) => {
   return (
     <div className='filteredList'>
       {content.slice(0, 30000).map((w) => {
-        return <span key={w}>{w}, </span>
+        return (
+          <span onClick={() => selectWordHandler(w)} key={w}>
+            {w},{' '}
+          </span>
+        )
       })}
     </div>
   )

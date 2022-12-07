@@ -78,7 +78,7 @@ const MainPage: React.FC = () => {
         </Button>
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth='sm'>
           <DialogTitle>
-            <Typography>Попробуйте общеупотребимое слово из списка</Typography>
+            <Typography>Попробуйте общеупотребимое слово из 5 букв, или скройте это окно и кликните по слову из списка.</Typography>
           </DialogTitle>
           <DialogContent dividers>
             <RICIBs
@@ -107,7 +107,7 @@ const MainPage: React.FC = () => {
         <WordLine tryWord={tryWord} submitHandler={submitHandler} />
       )}
 
-      <FilteredList term={term} />
+      <FilteredList term={term} tryWordHandler={tryWordHandler} />
     </div>
   )
 }

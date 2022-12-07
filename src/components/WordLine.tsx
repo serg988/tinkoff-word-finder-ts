@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
-import {
-  Button,
- 
-} from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Button } from '@mui/material'
 
 import './WordLine.css'
 interface IWordLine {
   tryWord: string[]
-  submitHandler: (colors: number[])=>void
+  submitHandler: (colors: number[]) => void
 }
 
 enum Status {
@@ -24,13 +21,15 @@ const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
   const [color4, setColor4] = useState<number>(0)
   const [color5, setColor5] = useState<number>(0)
 
-  const colors = [
-    color1,
-    color2,
-    color3,
-    color4,
-    color5,
-  ]
+  useEffect(() => {
+    if (color1 !== 2) setColor1(0)
+    if (color2 !== 2) setColor2(0)
+    if (color3 !== 2) setColor3(0)
+    if (color4 !== 2) setColor4(0)
+    if (color5 !== 2) setColor5(0)
+  }, [tryWord])
+
+  const colors = [color1, color2, color3, color4, color5]
 
   const changeColor = () => {
     i = i + 1
@@ -40,7 +39,7 @@ const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
 
   return (
     <>
-      <p style={{ color: 'gray' }}>Нажатие на букву меняет её цвет/статус.</p>
+      <p style={{ color: 'gray' }}>Нажатие на букву меняет её цвет/статус. Выставьте цвета букв, как в приложении "5 букв"</p>
       <div className='container'>
         <div
           onClick={() => setColor1(changeColor())}
@@ -72,7 +71,6 @@ const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
         >
           {tryWord[4]}
         </div>
-  
       </div>
       <Button
         variant='outlined'
