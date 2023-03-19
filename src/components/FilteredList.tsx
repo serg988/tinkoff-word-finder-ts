@@ -7,7 +7,10 @@ interface IFilteredList {
   // term: any
 }
 
-const FilteredList: React.FC<IFilteredList> = ({ term, tryWordHandler }) => {
+const FilteredList: React.FC<IFilteredList> = ({
+  term,
+  tryWordHandler,
+}: IFilteredList) => {
   const [wordsList, setWordsList] = useState<string[]>([])
 
   useEffect(() => {
@@ -92,7 +95,11 @@ const FilteredList: React.FC<IFilteredList> = ({ term, tryWordHandler }) => {
     <div className='filteredList'>
       {content.slice(0, 30000).map((w) => {
         return (
-          <span onClick={() => selectWordHandler(w)} key={w}>
+          <span
+            style={{ cursor: 'pointer' }}
+            onClick={() => selectWordHandler(w)}
+            key={w}
+          >
             {w},{' '}
           </span>
         )

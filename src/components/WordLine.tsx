@@ -14,7 +14,7 @@ enum Status {
 }
 let i = 0
 
-const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
+const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }: IWordLine) => {
   const [color1, setColor1] = useState<number>(0)
   const [color2, setColor2] = useState<number>(0)
   const [color3, setColor3] = useState<number>(0)
@@ -39,7 +39,10 @@ const WordLine: React.FC<IWordLine> = ({ tryWord, submitHandler }) => {
 
   return (
     <>
-      <p style={{ color: 'gray' }}>Нажатие на букву меняет её цвет/статус. Выставьте цвета букв, как в приложении "5 букв"</p>
+      <p style={{ color: 'gray' }}>
+        Нажатие на букву меняет её цвет/статус. Выставьте цвета букв, как в
+        приложении "5 букв"
+      </p>
       <div className='container'>
         <div
           onClick={() => setColor1(changeColor())}

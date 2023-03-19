@@ -15,17 +15,18 @@
   align-items: center;
   justify-content: center;
   font-size: 1.7rem;
+  cursor: pointer;
 }
 .box.gray {
-  background-color: gray;
-  color: lightgray;
+  background-color: gray !important;
+  color: lightgray !important;
 }
 .box.white {
-  background-color: white;
+  background-color: white !important;
 }
 .box.yellow {
-  background-color: yellow;
-  color: black;
+  background-color: yellow !important;
+  color: black !important;
 }
 .wordLineTitle {
   margin-top: 50px;
