@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import words from '../utils/parser'
+import words from '../utils/__parser'
 
 interface IFilteredList {
   term?: { lip: string[]; npl: string[]; pl: string[] }
@@ -33,19 +33,6 @@ const FilteredList: React.FC<IFilteredList> = ({
     // -------------PRESENTED LETTERS-------------
 
     if (term?.pl && term?.pl.length > 0) {
-      let exp = '......'
-
-      if (term?.pl) {
-        if (/[а-я]/.test(term?.pl.join(''))) {
-          exp = term?.pl.join('')
-        }
-      }
-
-      const regexObj = new RegExp(exp)
-
-      setWordsList((prevState) =>
-        prevState.filter((word) => !regexObj.test(word))
-      )
       const plWithoutDots = term.pl.filter((l) => l !== '.')
 
       plWithoutDots.forEach((element: string) => {
@@ -53,6 +40,29 @@ const FilteredList: React.FC<IFilteredList> = ({
           prevState.filter((word) => word.includes(element))
         )
       })
+
+      let exp = '.....'
+
+      if (term?.pl) {
+        if (/[а-я]/.test(term?.pl.join(''))) {
+          exp = term?.pl.join('')
+        }
+      }
+
+      let filtered: string[] = []
+
+      wordsList.forEach((word) => {
+        let wordArr = word.split('')
+        wordArr.forEach((char, i) => {
+          if (char === term.pl[i]) {
+            filtered.push(word)
+          }
+        })
+      })
+
+      filtered.forEach((word) =>
+        setWordsList((prev) => prev.filter((w) => w !== word))
+      )
     }
 
     //----------------L I P------------------
