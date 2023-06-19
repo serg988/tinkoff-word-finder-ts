@@ -16,6 +16,7 @@
   justify-content: center;
   font-size: 1.7rem;
   cursor: pointer;
+  user-select: none
 }
 .box.gray {
   background-color: gray !important;

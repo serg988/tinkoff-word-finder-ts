@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import words from '../utils/__parser'
+import words from '../utils/_____parser'
 
 interface IFilteredList {
   term?: { lip: string[]; npl: string[]; pl: string[] }
